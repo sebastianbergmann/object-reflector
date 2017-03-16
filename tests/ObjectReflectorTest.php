@@ -47,4 +47,11 @@ class ObjectReflectorTest extends TestCase
             $this->objectReflector->getAttributes($o)
         );
     }
+
+    public function testRaisesExceptionWhenPassedArgumentIsNotAnObject()/*: void */
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->objectReflector->getAttributes(null);
+    }
 }
