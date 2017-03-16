@@ -28,28 +28,22 @@ class ObjectReflector
         }
 
         $attributes = [];
-        $reflector  = new \ReflectionObject($object);
+        $className  = get_class($object);
 
-        foreach ($reflector->getProperties() as $attribute) {
-            $attribute->setAccessible(true);
+        foreach ((array) $object as $name => $value) {
+            $name = explode("\0", $name);
 
-            try {
-                $attributes[$attribute->getName()] = $attribute->getValue($object);
-            } catch (\Throwable $t) {
-                continue;
-            }
-        }
-
-        while ($reflector = $reflector->getParentClass()) {
-            foreach ($reflector->getProperties() as $attribute) {
-                $attribute->setAccessible(true);
-
-                try {
-                    $attributes[$attribute->getDeclaringClass()->getName() . '::' . $attribute->getName()] = $attribute->getValue($object);
-                } catch (\Throwable $t) {
-                    continue;
+            if (count($name) === 1) {
+                $name = $name[0];
+            } else {
+                if ($name[1] !== $className) {
+                    $name = $name[1] . '::' . $name[2];
+                } else {
+                    $name = $name[2];
                 }
             }
+
+            $attributes[$name] = $value;
         }
 
         return $attributes;

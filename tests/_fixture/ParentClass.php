@@ -14,5 +14,7 @@ namespace SebastianBergmann\ObjectReflector\TestFixture;
 
 class ParentClass
 {
-    private $foo = 'bar';
+    private $privateInParent = 'private';
+    private $protectedInParent = 'protected';
+    private $publicInParent = 'public';
 }
