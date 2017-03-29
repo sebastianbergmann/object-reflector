@@ -31,7 +31,7 @@ class ObjectReflector
         $className  = get_class($object);
 
         foreach ((array) $object as $name => $value) {
-            $name = explode("\0", $name);
+            $name = explode("\0", (string) $name);
 
             if (count($name) === 1) {
                 $name = $name[0];
