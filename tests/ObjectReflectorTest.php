@@ -14,6 +14,7 @@ namespace SebastianBergmann\ObjectReflector;
 
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
+use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerAttributeName;
 
 /**
  * @covers SebastianBergmann\ObjectReflector\ObjectReflector
@@ -43,6 +44,18 @@ class ObjectReflectorTest extends TestCase
                 'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::privateInParent' => 'private',
                 'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::protectedInParent' => 'protected',
                 'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::publicInParent' => 'public',
+            ],
+            $this->objectReflector->getAttributes($o)
+        );
+    }
+
+    public function testReflectsAttributeWithIntegerName()/*: void */
+    {
+        $o = new ClassWithIntegerAttributeName;
+
+        $this->assertEquals(
+            [
+                1 => 2
             ],
             $this->objectReflector->getAttributes($o)
         );
