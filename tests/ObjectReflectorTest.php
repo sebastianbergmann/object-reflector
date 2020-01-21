@@ -26,12 +26,12 @@ class ObjectReflectorTest extends TestCase
      */
     private $objectReflector;
 
-    protected function setUp()/*: void */
+    protected function setUp(): void
     {
         $this->objectReflector = new ObjectReflector;
     }
 
-    public function testReflectsAttributesOfObject()/*: void */
+    public function testReflectsAttributesOfObject(): void
     {
         $o = new ChildClass;
 
@@ -49,7 +49,7 @@ class ObjectReflectorTest extends TestCase
         );
     }
 
-    public function testReflectsAttributeWithIntegerName()/*: void */
+    public function testReflectsAttributeWithIntegerName(): void
     {
         $o = new ClassWithIntegerAttributeName;
 
@@ -61,7 +61,7 @@ class ObjectReflectorTest extends TestCase
         );
     }
 
-    public function testRaisesExceptionWhenPassedArgumentIsNotAnObject()/*: void */
+    public function testRaisesExceptionWhenPassedArgumentIsNotAnObject(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
