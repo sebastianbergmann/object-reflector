@@ -9,7 +9,6 @@
             "email": "sebastian@phpunit.de"
         }
     ],
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "platform": {
