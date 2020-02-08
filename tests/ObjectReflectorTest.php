@@ -9,7 +9,14 @@
  */
 
 declare(strict_types=1);
-
+/*
+ * This file is part of sebastian/object-reflector.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace SebastianBergmann\ObjectReflector;
 
 use PHPUnit\Framework\TestCase;
@@ -37,13 +44,13 @@ class ObjectReflectorTest extends TestCase
 
         $this->assertEquals(
             [
-                'privateInChild' => 'private',
-                'protectedInChild' => 'protected',
-                'publicInChild' => 'public',
-                'undeclared' => 'undeclared',
-                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::privateInParent' => 'private',
+                'privateInChild'                                                               => 'private',
+                'protectedInChild'                                                             => 'protected',
+                'publicInChild'                                                                => 'public',
+                'undeclared'                                                                   => 'undeclared',
+                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::privateInParent'   => 'private',
                 'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::protectedInParent' => 'protected',
-                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::publicInParent' => 'public',
+                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::publicInParent'    => 'public',
             ],
             $this->objectReflector->getAttributes($o)
         );
@@ -55,7 +62,7 @@ class ObjectReflectorTest extends TestCase
 
         $this->assertEquals(
             [
-                1 => 2
+                1 => 2,
             ],
             $this->objectReflector->getAttributes($o)
         );
