@@ -9,7 +9,14 @@
  */
 
 declare(strict_types=1);
-
+/*
+ * This file is part of sebastian/object-reflector.
+ *
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace SebastianBergmann\ObjectReflector;
 
 class ObjectReflector
@@ -17,23 +24,21 @@ class ObjectReflector
     /**
      * @param object $object
      *
-     * @return array
-     *
      * @throws InvalidArgumentException
      */
     public function getAttributes($object): array
     {
-        if (!is_object($object)) {
+        if (!\is_object($object)) {
             throw new InvalidArgumentException;
         }
 
         $attributes = [];
-        $className  = get_class($object);
+        $className  = \get_class($object);
 
         foreach ((array) $object as $name => $value) {
-            $name = explode("\0", (string) $name);
+            $name = \explode("\0", (string) $name);
 
-            if (count($name) === 1) {
+            if (\count($name) === 1) {
                 $name = $name[0];
             } else {
                 if ($name[1] !== $className) {
