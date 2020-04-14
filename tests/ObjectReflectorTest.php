@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 /*
  * This file is part of sebastian/object-reflector.
  *
@@ -16,9 +14,9 @@ use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerAttributeName;
 
 /**
- * @covers SebastianBergmann\ObjectReflector\ObjectReflector
+ * @covers \SebastianBergmann\ObjectReflector\ObjectReflector
  */
-class ObjectReflectorTest extends TestCase
+final class ObjectReflectorTest extends TestCase
 {
     /**
      * @var ObjectReflector
