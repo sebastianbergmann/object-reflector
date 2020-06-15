@@ -2,6 +2,12 @@
 
 All notable changes to `sebastianbergmann/object-reflector` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [2.0.1] - 2020-06-15
+
+### Changed
+
+* Tests etc. are now ignored for archive exports
+
 ## [2.0.0] - 2020-02-07
 
 ### Removed
@@ -22,6 +28,7 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 
 * Initial release
 
-[2.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/1.1.1...master
+[2.0.1]: https://github.com/sebastianbergmann/object-reflector/compare/2.0.0...2.0.1
+[2.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/1.1.1...2.0.0
 [1.1.1]: https://github.com/sebastianbergmann/object-reflector/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/sebastianbergmann/object-reflector/compare/1.0.0...1.1.0
