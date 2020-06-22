@@ -9,6 +9,11 @@
  */
 namespace SebastianBergmann\ObjectReflector;
 
+use function count;
+use function explode;
+use function get_class;
+use function is_object;
+
 class ObjectReflector
 {
     /**
@@ -18,17 +23,17 @@ class ObjectReflector
      */
     public function getAttributes($object): array
     {
-        if (!\is_object($object)) {
+        if (!is_object($object)) {
             throw new InvalidArgumentException;
         }
 
         $attributes = [];
-        $className  = \get_class($object);
+        $className  = get_class($object);
 
         foreach ((array) $object as $name => $value) {
-            $name = \explode("\0", (string) $name);
+            $name = explode("\0", (string) $name);
 
-            if (\count($name) === 1) {
+            if (count($name) === 1) {
                 $name = $name[0];
             } else {
                 if ($name[1] !== $className) {
