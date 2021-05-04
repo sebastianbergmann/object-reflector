@@ -13,7 +13,7 @@ class ClassWithIntegerAttributeName
 {
     public function __construct()
     {
-        $i        = 1;
-        $this->$i = 2;
+        $i          = 1;
+        $this->{$i} = 2;
     }
 }
