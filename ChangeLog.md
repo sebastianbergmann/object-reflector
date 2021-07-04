@@ -2,6 +2,12 @@
 
 All notable changes to `sebastianbergmann/object-reflector` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.0] - 2021-MM-DD
+
+### Removed
+
+* This component is no longer supported on PHP 7
+
 ## [2.0.4] - 2020-10-26
 
 ### Fixed
@@ -46,6 +52,7 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 
 * Initial release
 
+[3.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/2.0.4...master
 [2.0.4]: https://github.com/sebastianbergmann/object-reflector/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/sebastianbergmann/object-reflector/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/sebastianbergmann/object-reflector/compare/2.0.1...2.0.2
