@@ -11,11 +11,11 @@ namespace SebastianBergmann\ObjectReflector\TestFixture;
 
 class ChildClass extends ParentClass
 {
-    private $privateInChild = 'private';
+    private string $privateInChild = 'private';
 
-    private $protectedInChild = 'protected';
+    private string $protectedInChild = 'protected';
 
-    private $publicInChild = 'public';
+    private string $publicInChild = 'public';
 
     public function __construct()
     {

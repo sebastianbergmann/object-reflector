@@ -11,17 +11,14 @@ namespace SebastianBergmann\ObjectReflector;
 
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
-use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerAttributeName;
+use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
 
 /**
  * @covers \SebastianBergmann\ObjectReflector\ObjectReflector
  */
 final class ObjectReflectorTest extends TestCase
 {
-    /**
-     * @var ObjectReflector
-     */
-    private $objectReflector;
+    private ObjectReflector $objectReflector;
 
     protected function setUp(): void
     {
@@ -48,7 +45,7 @@ final class ObjectReflectorTest extends TestCase
 
     public function testReflectsAttributeWithIntegerName(): void
     {
-        $o = new ClassWithIntegerAttributeName;
+        $o = new ClassWithIntegerPropertyName;
 
         $this->assertEquals(
             [
@@ -56,12 +53,5 @@ final class ObjectReflectorTest extends TestCase
             ],
             $this->objectReflector->getAttributes($o)
         );
-    }
-
-    public function testRaisesExceptionWhenPassedArgumentIsNotAnObject(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $this->objectReflector->getAttributes(null);
     }
 }
