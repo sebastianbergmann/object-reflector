@@ -17,7 +17,7 @@ final class ObjectReflector
     /**
      * @psalm-return array<string,mixed>
      */
-    public function getAttributes(object $object): array
+    public function getProperties(object $object): array
     {
         $properties = [];
         $className  = $object::class;

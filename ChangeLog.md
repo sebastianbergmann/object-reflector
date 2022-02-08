@@ -4,6 +4,10 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 
 ## [3.0.0] - 2021-MM-DD
 
+### Changed
+
+* `ObjectReflector::getAttributes()` has been renamed to `ObjectReflector::getProperties()`
+
 ### Removed
 
 * This component is no longer supported on PHP 7
