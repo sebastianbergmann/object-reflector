@@ -3,7 +3,7 @@
 [![CI Status](https://github.com/sebastianbergmann/object-reflector/workflows/CI/badge.svg)](https://github.com/sebastianbergmann/object-reflector/actions)
 [![Type Coverage](https://shepherd.dev/github/sebastianbergmann/object-reflector/coverage.svg)](https://shepherd.dev/github/sebastianbergmann/object-reflector)
 
-Allows reflection of object attributes, including inherited and non-public ones.
+Allows reflection of object properties, including inherited and private as well as protected ones.
 
 ## Installation
 
