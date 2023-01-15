@@ -9,13 +9,12 @@
  */
 namespace SebastianBergmann\ObjectReflector;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
 
-/**
- * @covers \SebastianBergmann\ObjectReflector\ObjectReflector
- */
+#[CoversClass(ObjectReflector::class)]
 final class ObjectReflectorTest extends TestCase
 {
     private ObjectReflector $objectReflector;
