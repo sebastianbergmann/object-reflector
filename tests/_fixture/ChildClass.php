@@ -9,6 +9,9 @@
  */
 namespace SebastianBergmann\ObjectReflector\TestFixture;
 
+use AllowDynamicProperties;
+
+#[AllowDynamicProperties]
 class ChildClass extends ParentClass
 {
     private string $privateInChild   = 'private';

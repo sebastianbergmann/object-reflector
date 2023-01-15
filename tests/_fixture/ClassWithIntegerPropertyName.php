@@ -9,6 +9,9 @@
  */
 namespace SebastianBergmann\ObjectReflector\TestFixture;
 
+use AllowDynamicProperties;
+
+#[AllowDynamicProperties]
 class ClassWithIntegerPropertyName
 {
     public function __construct()
