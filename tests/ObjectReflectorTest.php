@@ -38,7 +38,7 @@ final class ObjectReflectorTest extends TestCase
                 'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::protectedInParent' => 'protected',
                 'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::publicInParent'    => 'public',
             ],
-            $this->objectReflector->getProperties($o)
+            $this->objectReflector->getProperties($o),
         );
     }
 
@@ -50,7 +50,7 @@ final class ObjectReflectorTest extends TestCase
             [
                 1 => 2,
             ],
-            $this->objectReflector->getProperties($o)
+            $this->objectReflector->getProperties($o),
         );
     }
 }
