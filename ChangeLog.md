@@ -80,7 +80,7 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 
 * Initial release
 
-[6.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/5.0...main
+[6.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/5.0...6.0.0
 [5.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/4.0...5.0.0
 [4.0.1]: https://github.com/sebastianbergmann/object-reflector/compare/4.0.0...4.0.1
 [4.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/3.0...4.0.0
