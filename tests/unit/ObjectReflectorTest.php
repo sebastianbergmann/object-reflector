@@ -15,6 +15,7 @@ use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassRedeclaringPrivateProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassWithNonPrivateProperties;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
+use SebastianBergmann\ObjectReflector\TestFixture\ClassWithPropertyHooks;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithUninitializedProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ParentClassWithPrivateProperty;
 use stdClass;
@@ -95,6 +96,27 @@ final class ObjectReflectorTest extends TestCase
         $this->assertSame(
             [
                 'initialized' => 'value',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    /**
+     * Virtual properties have no backing storage and therefore nothing to reflect.
+     * Backed properties are reflected using the value that is stored in them; their
+     * get hooks are not invoked. This distinguishes the reflection performed here
+     * from get_object_vars() and ReflectionProperty::getValue(), both of which do
+     * invoke get hooks.
+     */
+    public function testReflectsValueStoredInBackedPropertyWithHooksAndIgnoresVirtualProperty(): void
+    {
+        $o = new ClassWithPropertyHooks;
+
+        $this->assertSame(
+            [
+                'backed'             => 'public',
+                '*::protectedBacked' => 'protected',
+                'privateBacked'      => 'private',
             ],
             $this->objectReflector->getProperties($o),
         );
