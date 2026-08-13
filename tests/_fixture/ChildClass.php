@@ -14,9 +14,9 @@ use AllowDynamicProperties;
 #[AllowDynamicProperties]
 class ChildClass extends ParentClass
 {
-    private string $privateInChild   = 'private';
-    private string $protectedInChild = 'protected';
-    private string $publicInChild    = 'public';
+    private string $firstPrivateInChild  = 'first';
+    private string $secondPrivateInChild = 'second';
+    private string $thirdPrivateInChild  = 'third';
 
     public function __construct()
     {

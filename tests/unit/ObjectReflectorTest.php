@@ -39,13 +39,13 @@ final class ObjectReflectorTest extends TestCase
 
         $this->assertEquals(
             [
-                'privateInChild'                                                               => 'private',
-                'protectedInChild'                                                             => 'protected',
-                'publicInChild'                                                                => 'public',
-                'undeclared'                                                                   => 'undeclared',
-                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::privateInParent'   => 'private',
-                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::protectedInParent' => 'protected',
-                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::publicInParent'    => 'public',
+                'firstPrivateInChild'                                                              => 'first',
+                'secondPrivateInChild'                                                             => 'second',
+                'thirdPrivateInChild'                                                              => 'third',
+                'undeclared'                                                                       => 'undeclared',
+                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::firstPrivateInParent'  => 'first',
+                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::secondPrivateInParent' => 'second',
+                'SebastianBergmann\ObjectReflector\TestFixture\ParentClass::thirdPrivateInParent'  => 'third',
             ],
             $this->objectReflector->getProperties($o),
         );
