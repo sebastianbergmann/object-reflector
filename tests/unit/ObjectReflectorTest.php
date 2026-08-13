@@ -12,8 +12,10 @@ namespace SebastianBergmann\ObjectReflector;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
+use SebastianBergmann\ObjectReflector\TestFixture\ChildClassRedeclaringPrivateProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassWithNonPrivateProperties;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
+use SebastianBergmann\ObjectReflector\TestFixture\ParentClassWithPrivateProperty;
 
 #[CoversClass(ObjectReflector::class)]
 final class ObjectReflectorTest extends TestCase
@@ -66,6 +68,19 @@ final class ObjectReflectorTest extends TestCase
                 'publicInChild'        => 'public',
                 '*::protectedInChild'  => 'protected',
                 'privateInChild'       => 'private',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    public function testReflectsPrivatePropertyThatIsRedeclaredInChildClass(): void
+    {
+        $o = new ChildClassRedeclaringPrivateProperty;
+
+        $this->assertSame(
+            [
+                ParentClassWithPrivateProperty::class . '::property' => 'parent',
+                'property'                                           => 'child',
             ],
             $this->objectReflector->getProperties($o),
         );
