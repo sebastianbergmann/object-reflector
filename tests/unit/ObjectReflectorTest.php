@@ -15,7 +15,9 @@ use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassRedeclaringPrivateProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassWithNonPrivateProperties;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
+use SebastianBergmann\ObjectReflector\TestFixture\ClassWithUninitializedProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ParentClassWithPrivateProperty;
+use stdClass;
 
 #[CoversClass(ObjectReflector::class)]
 final class ObjectReflectorTest extends TestCase
@@ -84,5 +86,22 @@ final class ObjectReflectorTest extends TestCase
             ],
             $this->objectReflector->getProperties($o),
         );
+    }
+
+    public function testDoesNotReflectUninitializedProperty(): void
+    {
+        $o = new ClassWithUninitializedProperty;
+
+        $this->assertSame(
+            [
+                'initialized' => 'value',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    public function testReflectsObjectWithoutProperties(): void
+    {
+        $this->assertSame([], $this->objectReflector->getProperties(new stdClass));
     }
 }
