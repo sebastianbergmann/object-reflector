@@ -4,6 +4,10 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 
 ## [6.1.0] - 2026-MM-DD
 
+### Changed
+
+* Improved performance of `ObjectReflector::getProperties()`
+
 ### Fixed
 
 * A property whose name contains a null byte is no longer reflected under a wrong name

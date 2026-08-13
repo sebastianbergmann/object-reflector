@@ -16,12 +16,23 @@ use function substr;
 final class ObjectReflector
 {
     /**
+     * Maps mangled property names to their unmangled representation, per class.
+     *
+     * Only mangled names (those of declared private and protected properties)
+     * are cached; dynamic property names are never mangled and are used as-is.
+     *
+     * @var array<class-string, array<non-empty-string, string>>
+     */
+    private static array $names = [];
+
+    /**
      * @return array<array-key, mixed>
      */
     public function getProperties(object $object): array
     {
-        $properties = [];
-        $className  = $object::class;
+        $properties  = [];
+        $className   = $object::class;
+        $cachedNames = self::$names[$className] ?? [];
 
         foreach ((array) $object as $name => $value) {
             /*
@@ -30,6 +41,12 @@ final class ObjectReflector
              */
             if (!is_string($name) || $name === '' || $name[0] !== "\0") {
                 $properties[$name] = $value;
+
+                continue;
+            }
+
+            if (isset($cachedNames[$name])) {
+                $properties[$cachedNames[$name]] = $value;
 
                 continue;
             }
@@ -51,7 +68,12 @@ final class ObjectReflector
             $declaringClass = substr($name, 1, $separator - 1);
             $propertyName   = substr($name, $separator + 1);
 
-            $properties[$declaringClass === $className ? $propertyName : $declaringClass . '::' . $propertyName] = $value;
+            $unmangledName = $declaringClass === $className ? $propertyName : $declaringClass . '::' . $propertyName;
+
+            $cachedNames[$name]      = $unmangledName;
+            self::$names[$className] = $cachedNames;
+
+            $properties[$unmangledName] = $value;
         }
 
         return $properties;
