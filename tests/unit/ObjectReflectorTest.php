@@ -92,6 +92,37 @@ final class ObjectReflectorTest extends TestCase
         );
     }
 
+    /**
+     * The mangled name of a private property declared in a parent class is the same
+     * no matter which class the reflected object is an instance of, but it has to be
+     * unmangled differently: only for an object of a class other than the declaring
+     * one is the name of the declaring class prepended. Unmangled names are cached
+     * per class; reflecting objects of both classes twice exercises that cache.
+     */
+    public function testUnmanglesPropertyNameBasedOnClassOfReflectedObject(): void
+    {
+        $expectedForParent = [
+            'property' => 'parent',
+        ];
+
+        $expectedForChild = [
+            ParentClassWithPrivateProperty::class . '::property' => 'parent',
+            'property'                                           => 'child',
+        ];
+
+        for ($i = 0; $i < 2; $i++) {
+            $this->assertSame(
+                $expectedForParent,
+                $this->objectReflector->getProperties(new ParentClassWithPrivateProperty),
+            );
+
+            $this->assertSame(
+                $expectedForChild,
+                $this->objectReflector->getProperties(new ChildClassRedeclaringPrivateProperty),
+            );
+        }
+    }
+
     public function testReflectsPropertiesOfObjectOfAnonymousClass(): void
     {
         $o = ClassThatCreatesAnonymousClass::create();
@@ -146,6 +177,30 @@ final class ObjectReflectorTest extends TestCase
         $this->assertSame(
             [
                 "a\0b" => 'value',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    public function testReflectsPropertyWhoseNameBeginsWithNullByte(): void
+    {
+        $o = (object) ["\0property" => 'value'];
+
+        $this->assertSame(
+            [
+                "\0property" => 'value',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    public function testReflectsPropertyWhoseNameIsEmpty(): void
+    {
+        $o = (object) ['' => 'value'];
+
+        $this->assertSame(
+            [
+                '' => 'value',
             ],
             $this->objectReflector->getProperties($o),
         );
