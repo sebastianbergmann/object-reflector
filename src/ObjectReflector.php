@@ -9,8 +9,9 @@
  */
 namespace SebastianBergmann\ObjectReflector;
 
-use function explode;
 use function is_string;
+use function strrpos;
+use function substr;
 
 final class ObjectReflector
 {
@@ -33,9 +34,24 @@ final class ObjectReflector
                 continue;
             }
 
-            $parts = explode("\0", $name);
+            /*
+             * The name of a private property is mangled to "\0Class\0property",
+             * that of a protected property to "\0*\0property". The name of an
+             * anonymous class contains a null byte itself, so the separator has
+             * to be searched for from the end of the string.
+             */
+            $separator = strrpos($name, "\0");
 
-            $properties[$parts[1] !== $className ? $parts[1] . '::' . $parts[2] : $parts[2]] = $value;
+            if ($separator === false || $separator < 1) {
+                $properties[$name] = $value;
+
+                continue;
+            }
+
+            $declaringClass = substr($name, 1, $separator - 1);
+            $propertyName   = substr($name, $separator + 1);
+
+            $properties[$declaringClass === $className ? $propertyName : $declaringClass . '::' . $propertyName] = $value;
         }
 
         return $properties;

@@ -7,6 +7,7 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 ### Fixed
 
 * A property whose name contains a null byte is no longer reflected under a wrong name
+* The name of a private property of an object of an anonymous class is no longer lost
 
 ## [6.0.0] - 2026-02-06
 

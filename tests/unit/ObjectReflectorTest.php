@@ -15,6 +15,7 @@ use ReflectionClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassRedeclaringPrivateProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassWithNonPrivateProperties;
+use SebastianBergmann\ObjectReflector\TestFixture\ClassThatCreatesAnonymousClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithPropertyHooks;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithUninitializedProperty;
@@ -86,6 +87,20 @@ final class ObjectReflectorTest extends TestCase
             [
                 ParentClassWithPrivateProperty::class . '::property' => 'parent',
                 'property'                                           => 'child',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    public function testReflectsPropertiesOfObjectOfAnonymousClass(): void
+    {
+        $o = ClassThatCreatesAnonymousClass::create();
+
+        $this->assertSame(
+            [
+                'publicProperty'       => 'public',
+                '*::protectedProperty' => 'protected',
+                'privateProperty'      => 'private',
             ],
             $this->objectReflector->getProperties($o),
         );
