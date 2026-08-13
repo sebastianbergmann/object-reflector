@@ -12,6 +12,7 @@ namespace SebastianBergmann\ObjectReflector;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
+use SebastianBergmann\ObjectReflector\TestFixture\ChildClassWithNonPrivateProperties;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
 
 #[CoversClass(ObjectReflector::class)]
@@ -49,6 +50,22 @@ final class ObjectReflectorTest extends TestCase
         $this->assertEquals(
             [
                 1 => 2,
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
+    public function testReflectsProtectedAndPublicPropertiesOfObject(): void
+    {
+        $o = new ChildClassWithNonPrivateProperties;
+
+        $this->assertSame(
+            [
+                'publicInParent'       => 'public',
+                '*::protectedInParent' => 'protected',
+                'publicInChild'        => 'public',
+                '*::protectedInChild'  => 'protected',
+                'privateInChild'       => 'private',
             ],
             $this->objectReflector->getProperties($o),
         );
