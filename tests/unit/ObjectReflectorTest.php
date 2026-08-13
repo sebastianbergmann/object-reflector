@@ -124,6 +124,18 @@ final class ObjectReflectorTest extends TestCase
         );
     }
 
+    public function testReflectsPropertyWhoseNameContainsNullByte(): void
+    {
+        $o = (object) ["a\0b" => 'value'];
+
+        $this->assertSame(
+            [
+                "a\0b" => 'value',
+            ],
+            $this->objectReflector->getProperties($o),
+        );
+    }
+
     public function testReflectsObjectWithoutProperties(): void
     {
         $this->assertSame([], $this->objectReflector->getProperties(new stdClass));

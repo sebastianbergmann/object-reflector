@@ -9,13 +9,13 @@
  */
 namespace SebastianBergmann\ObjectReflector;
 
-use function count;
 use function explode;
+use function is_string;
 
 final class ObjectReflector
 {
     /**
-     * @return array<string, mixed>
+     * @return array<array-key, mixed>
      */
     public function getProperties(object $object): array
     {
@@ -23,17 +23,19 @@ final class ObjectReflector
         $className  = $object::class;
 
         foreach ((array) $object as $name => $value) {
-            $name = explode("\0", (string) $name);
+            /*
+             * Names of public (and dynamic) properties are not mangled and
+             * therefore need no processing at all.
+             */
+            if (!is_string($name) || $name === '' || $name[0] !== "\0") {
+                $properties[$name] = $value;
 
-            if (count($name) === 1) {
-                $name = $name[0];
-            } elseif ($name[1] !== $className) {
-                $name = $name[1] . '::' . $name[2];
-            } else {
-                $name = $name[2];
+                continue;
             }
 
-            $properties[$name] = $value;
+            $parts = explode("\0", $name);
+
+            $properties[$parts[1] !== $className ? $parts[1] . '::' . $parts[2] : $parts[2]] = $value;
         }
 
         return $properties;

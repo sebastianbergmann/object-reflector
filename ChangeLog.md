@@ -2,6 +2,12 @@
 
 All notable changes to `sebastianbergmann/object-reflector` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [6.1.0] - 2026-MM-DD
+
+### Fixed
+
+* A property whose name contains a null byte is no longer reflected under a wrong name
+
 ## [6.0.0] - 2026-02-06
 
 ### Removed
@@ -80,6 +86,7 @@ All notable changes to `sebastianbergmann/object-reflector` are documented in th
 
 * Initial release
 
+[6.1.0]: https://github.com/sebastianbergmann/object-reflector/compare/6.0.0...main
 [6.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/5.0...6.0.0
 [5.0.0]: https://github.com/sebastianbergmann/object-reflector/compare/4.0...5.0.0
 [4.0.1]: https://github.com/sebastianbergmann/object-reflector/compare/4.0.0...4.0.1
