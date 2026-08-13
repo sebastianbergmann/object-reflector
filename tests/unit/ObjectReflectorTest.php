@@ -11,12 +11,14 @@ namespace SebastianBergmann\ObjectReflector;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClass;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassRedeclaringPrivateProperty;
 use SebastianBergmann\ObjectReflector\TestFixture\ChildClassWithNonPrivateProperties;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithIntegerPropertyName;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithPropertyHooks;
 use SebastianBergmann\ObjectReflector\TestFixture\ClassWithUninitializedProperty;
+use SebastianBergmann\ObjectReflector\TestFixture\ParentClassWithNonPrivateProperties;
 use SebastianBergmann\ObjectReflector\TestFixture\ParentClassWithPrivateProperty;
 use stdClass;
 
@@ -125,5 +127,54 @@ final class ObjectReflectorTest extends TestCase
     public function testReflectsObjectWithoutProperties(): void
     {
         $this->assertSame([], $this->objectReflector->getProperties(new stdClass));
+    }
+
+    /**
+     * Reflecting an object must not have side effects. Unlike get_object_vars(),
+     * ReflectionProperty::getValue(), and iteration, reflection performed here does
+     * not trigger the initializer of a lazy object. The properties of a lazy object
+     * that has not been initialized yet are not initialized, though, and are
+     * therefore not reflected.
+     */
+    public function testDoesNotInitializeLazyObject(): void
+    {
+        $initialized = false;
+
+        $class = new ReflectionClass(ParentClassWithNonPrivateProperties::class);
+
+        $object = $class->newLazyGhost(
+            static function (ParentClassWithNonPrivateProperties $object) use (&$initialized): void
+            {
+                $initialized = true;
+
+                $object->publicInParent = 'initialized';
+            },
+        );
+
+        $this->assertSame([], $this->objectReflector->getProperties($object));
+        $this->assertFalse($initialized);
+        $this->assertTrue($class->isUninitializedLazyObject($object));
+    }
+
+    public function testReflectsPropertiesOfInitializedLazyObject(): void
+    {
+        $class = new ReflectionClass(ParentClassWithNonPrivateProperties::class);
+
+        $object = $class->newLazyGhost(
+            static function (ParentClassWithNonPrivateProperties $object): void
+            {
+                $object->publicInParent = 'initialized';
+            },
+        );
+
+        $class->initializeLazyObject($object);
+
+        $this->assertSame(
+            [
+                'publicInParent'       => 'initialized',
+                '*::protectedInParent' => 'protected',
+            ],
+            $this->objectReflector->getProperties($object),
+        );
     }
 }
